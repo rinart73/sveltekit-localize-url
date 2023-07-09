@@ -20,7 +20,7 @@
 
 ## Interactive Live Demo
 
-Soon
+https://sveltekit-localize-url.vercel.app/
 
 ## Compatibility
 
