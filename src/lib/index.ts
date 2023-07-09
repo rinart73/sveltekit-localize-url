@@ -302,20 +302,23 @@ export function getPageParams(page: LocalizedPage, includeCustom = false): Local
  * @param page Localized page.
  * @param locale Desired locale.
  * @param pathname A new pathname to be localized. Can include localized parameters `[l_param]`.
- * @param useFallback If true, when one of the parameters doesn't support requested locale,
- *      the function will generate a href for the base locale instead.
+ * @param fallbackLocales If specified, when one of the parameters doesn't support requested locale,
+ *      the function will try to generate a href for the fallback locale instead.
+ *      - `true` - use `baseLocale` as a fallback;
+ *      - `'locale'` - use one locale as a fallback;
+ *      - `['locale1', 'locale2', ]` - use multiple fallback locales.
  * @returns Localized href or an empty string if that is not possible.
  * @example
  * ```typescript
  * const pathFAQ = href(localizedPage, 'ru', '/[l_about]/[l_faq]')
- * const pathNewsPost = href(localizedPage, 'ru', '/[l_news]/[category]/[post]')
+ * const pathNewsPost = href(localizedPage, 'ru', '/[l_news]/[category]/[post]', ['en', 'de'])
  * ```
  */
 export function href(
 	page: LocalizedPage,
 	locale: string,
 	pathname: string,
-	useFallback?: boolean
+	fallbackLocales?: boolean | string | string[]
 ): string;
 
 /**
@@ -323,10 +326,13 @@ export function href(
  * @param page Localized page.
  * @param locale Desired locale.
  * @param transform Contents:
- * - `base` - An old pathname (shouldn't include any excplicitly stated `[l_param]` params).
- * - `params` - A list of localized params or their names that should be used.
- * @param useFallback If true, when one of the parameters doesn't support requested locale,
- *      the function will generate a href for the base locale instead.
+ *      - `base` - An old pathname (shouldn't include any excplicitly stated `[l_param]` params).
+ *      - `params` - A list of localized params or their names that should be used.
+ * @param fallbackLocales If specified, when one of the parameters doesn't support requested locale,
+ *      the function will try to generate a href for the fallback locale instead.
+ *      - `true` - use `baseLocale` as a fallback;
+ *      - `'locale'` - use one locale as a fallback;
+ *      - `['locale1', 'locale2', ]` - use multiple fallback locales.
  * @returns Transformed localized href or an empty string if that is not possible.
  * @example
  * ```typescript
@@ -343,7 +349,7 @@ export function href(
 		base: string;
 		params: (LocalizedParam | string)[];
 	},
-	useFallback?: boolean
+	fallbackLocales?: boolean | string | string[]
 ): string;
 
 export function href(
@@ -355,7 +361,7 @@ export function href(
 				base: string;
 				params: (LocalizedParam | string)[];
 		  },
-	useFallback?: boolean
+	fallbackLocales?: boolean | string | string[]
 ): string;
 
 export function href(
@@ -367,7 +373,7 @@ export function href(
 				base: string;
 				params: (LocalizedParam | string)[];
 		  },
-	useFallback = false
+	fallbackLocale: boolean | string | string[] = false
 ): string {
 	let parts: string[];
 	let usedParams: (LocalizedParam | string)[];
@@ -434,8 +440,23 @@ export function href(
 		}
 
 		// no path for this locale
-		if (useFallback) {
-			return href(page, settings.baseLocale, pathData);
+		if (fallbackLocale) {
+			if (fallbackLocale === true) {
+				return href(page, settings.baseLocale, pathData);
+			}
+
+			if (typeof fallbackLocale === 'string') {
+				return href(page, fallbackLocale, pathData);
+			}
+
+			for (const fallback of fallbackLocale) {
+				if (fallback === locale) continue;
+
+				const fallbackHref = href(page, fallback, pathData);
+				if (fallbackHref) {
+					return fallbackHref;
+				}
+			}
 		}
 
 		return '';
@@ -472,9 +493,12 @@ export function href(
  * @param locale Desired locale.
  * @param pathname A new pathname to be localized. Can include localized parameters `[l_param]`.
  * @param text A text that will be returned if the path is localized successfully.
- *        Must contain a `%href%` piece that will be replaced with the localized href.
- * @param useFallback If true, when one of the parameters doesn't support requested locale,
- *        the function use generate a href for the base locale instead.
+ *      Must contain a `%href%` piece that will be replaced with the localized href.
+ * @param fallbackLocales If specified, when one of the parameters doesn't support requested locale,
+ *      the function will try to generate a href for the fallback locale instead.
+ *      - `true` - use `baseLocale` as a fallback;
+ *      - `'locale'` - use one locale as a fallback;
+ *      - `['locale1', 'locale2', ]` - use multiple fallback locales.
  * @example
  * ```svelte
  * {@html wrapHref(localizedPage, 'ru', '/[l_about]/[l_faq]', `<a href="%href%">${$LL.pageFAQ()}</a>`)}
@@ -485,9 +509,9 @@ export function wrapHref(
 	locale: string,
 	pathname: string,
 	text: string,
-	useFallback = false
+	fallbackLocales: boolean | string | string[] = false
 ): string {
-	const localizedPath = href(page, locale, pathname, useFallback);
+	const localizedPath = href(page, locale, pathname, fallbackLocales);
 	if (!localizedPath) return '';
 
 	return text.replace('%href%', localizedPath);

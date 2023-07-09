@@ -255,11 +255,14 @@ describe('href', () => {
 	it('supports fallback', () => {
 		initDefault();
 		localizeParam(1, 'l_partial', {
-			en: 'partial'
+			en: 'partial',
+			de: 'teilweise'
 		});
 		const LP = localizePage(new URL('http://foo.com/'), '/[[lang=lang]]');
 		expect(href(LP, 'ru', '/[l_partial]')).toBe('');
 		expect(href(LP, 'ru', '/[l_partial]', true)).toBe('http://foo.com/partial');
+		expect(href(LP, 'ru', '/[l_partial]', 'de')).toBe('http://foo.com/de/teilweise');
+		expect(href(LP, 'ru', '/[l_partial]', ['it', 'de'])).toBe('http://foo.com/de/teilweise');
 		expect(consoleError).toHaveBeenCalledTimes(0);
 	});
 	it('supports locale hosts', () => {
