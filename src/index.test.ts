@@ -392,6 +392,24 @@ describe('checkPage', () => {
 		expect(checkPage(LP, 'ru')).toMatchObject([PageCheckResult.NotLocalized]);
 		expect(consoleError).toHaveBeenCalledTimes(0);
 	});
+	it('handles URLs with search', () => {
+		initDefault();
+		localizeParam(1, 'l_about', {
+			en: 'about-us',
+			ru: 'o-nas'
+		});
+		let LP = localizePage(
+			new URL('http://foo.com/ru/o-nas?foo=bar'),
+			'/[[lang=lang]]/[l_about]'
+		);
+		expect(checkPage(LP, 'ru')).toMatchObject([PageCheckResult.Success]);
+		LP = localizePage(new URL('http://foo.com/ru/about?foo=bar'), '/[[lang=lang]]/[l_about]');
+		expect(checkPage(LP, 'ru')).toMatchObject([
+			PageCheckResult.Corrected,
+			'http://foo.com/ru/o-nas?foo=bar'
+		]);
+		expect(consoleError).toHaveBeenCalledTimes(0);
+	});
 });
 
 describe('validatePage', () => {

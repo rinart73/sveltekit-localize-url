@@ -584,18 +584,23 @@ export function checkPage(
 	page: LocalizedPage,
 	locale: string
 ): [PageCheckResult.Corrected, string] | [PageCheckResult] {
-	const correctPath = href(page, locale, {
+	const correctHref = href(page, locale, {
 		base: page._url.pathname,
 		params: getPageParams(page, true)
 	});
-	if (!correctPath) {
+
+	if (!correctHref) {
 		// not available for this locale
 		page._isNotAvailableForLocale = true;
 		return [PageCheckResult.NotLocalized];
 	}
-	if (correctPath !== page._url.href) {
-		return [PageCheckResult.Corrected, correctPath];
+
+	const correctUrl = new URL(correctHref);
+	if (correctUrl.host !== page._url.host || correctUrl.pathname !== page._url.pathname) {
+		correctUrl.search = page._url.search;
+		return [PageCheckResult.Corrected, correctUrl.href];
 	}
+
 	return [PageCheckResult.Success];
 }
 
