@@ -1,58 +1,82 @@
-# create-svelte
+# Localize URL [![NPM lite-youtube-embed package](https://img.shields.io/npm/v/sveltekit-localize-url.svg)](https://npmjs.org/package/sveltekit-localize-url)
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+**SvelteKit library that handles URL localization and routing.**
 
-Read more about creating a library [in the docs](https://kit.svelte.dev/docs/packaging).
+> **Note**
+> This package is WIP. It works but the future updates may introduce breaking changes to simplify setup or introduce features.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+-   Supports 3 URL structure types:
+    -   Locale prefix except for the base locale (default) - `/about`, `/ru/o-nas`;
+    -   Prefix for every locale - `/en/about`, `/ru/o-nas`;
+    -   Separate domains for locales - `example.com/about`, `example.ru/o-nas`.
+-   Validates current URL:
+    -   Redirects `/ru/about-us` to the corrected `/ru/o-nas`;
+    -   Supports partially localized pages - throws 404 if a page isn’t available for the requested locale.
+-   Helps to build localized URLs;
+-   Builds alternate URLs for the `<link rel="alternate"` tags and for a language switcher;
+-   Supports dynamic params that depend on the server (such as localized post slugs).
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Interactive Live Demo
 
-# create a new project in my-app
-npm create svelte@latest my-app
+Soon
+
+## Compatibility
+
+This library was initially created to be used with the [typesafe-i18n](https://github.com/ivanhofer/typesafe-i18n) library, but should work fine with any i18n library (or even without one).
+
+## Installation
+
+```
+npm install sveltekit-localize-url
 ```
 
-## Developing
+## Usage
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Please take a look the [example](https://github.com/rinart73/sveltekit-localize-url/tree/main/src) for the full setup.
 
-```bash
-npm run dev
+## How does it work?
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+Let's imagine that:
+
+-   Your default/base locale is `en` and enabled locales are `en`, `ru` and `it`;
+-   You have the following structure: `/[[lang=lang]]/[l_about=l_about]`;
+-   Your `l_about` param is registered like this:
+
+```typescript
+// src/params/l_about.ts
+import { localizeParam, matchParam } from 'sveltekit-localize-url';
+
+const localizedParam = localizeParam(1, 'l_about', {
+	en: 'about-us',
+	ru: 'o-nas'
+	// there is version in Italian
+});
+export const match: ParamMatcher = (param) => matchParam(param, localizedParam);
 ```
 
-Everything inside `src/lib` is part of your library, everything inside `src/routes` can be used as a showcase or preview app.
+When SvelteKit will match params, it will decide that **all of following paths are valid**:
 
-## Building
+-   `/about-us`
+-   `/en/about-us`
+-   `/ru/about-us`
+-   `/it/about-us`
+-   `/o-nas`
+-   `/en/o-nas`
+-   `/ru/o-nas`
+-   `/it/o-nas`
 
-To build your library:
+However the `validateUrlLocale()` function that is called in the `src/routes/[[lang=lang]]/+layout.ts` will take care of that by taking registered params and using them to construct a correct path for the current locale.
 
-```bash
-npm run package
-```
+-   If the paths match, proceed;
+-   If the paths don't match, redirect to a corrected URL;
+-   If it can't construct a path for the current locale, throw 404.
 
-To create a production version of your showcase app:
+So in the end we'll get the following:
 
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
-
-## Publishing
-
-Go into the `package.json` and give your package the desired name through the `"name"` option. Also consider adding a `"license"` field and point it to a `LICENSE` file which you can create from a template (one popular option is the [MIT license](https://opensource.org/license/mit/)).
-
-To publish your library to [npm](https://www.npmjs.com):
-
-```bash
-npm publish
-```
+-   `/about-us` - Correct;
+-   `/ru/o-nas` - Correct;
+-   `/o-nas`, `/en/about-us`, `/en/o-nas` - Redirect to `/about-us`;
+-   `/ru/about-us` - Redirect to `/ru/o-nas`;
+-   `/it/about-us`, `/it/o-nas` - 404 Not Found.
