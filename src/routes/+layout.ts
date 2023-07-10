@@ -14,7 +14,7 @@ export const load: LayoutLoad = async ({ url, route, data: { locale } }) => {
 	});
 
 	/**
-	 * Make sure that we're not overriding clientside locale when preloading pages on link hover.
+	 * Make sure that we're not overriding clientside typesafe-i18n locale when preloading pages on link hover.
 	 * An alternative solution is setting `data-sveltekit-preload-data` on the `body` tag to `tap` of `off`.
 	 */
 	let loadLocale = true;
@@ -38,7 +38,10 @@ export const load: LayoutLoad = async ({ url, route, data: { locale } }) => {
 	const $LL = get(LL);
 	console.info($LL.log({ fileName: 'routes/+layout.ts' }));
 
-	// create localized page
+	/**
+	 * We need to create localized page exactly here at the top layer ('routes/+layout.ts'),
+	 * so even if during page validation a 404 will be thrown, layout and error page could still access it.
+	 */
 	const LP = localizePage(url, route.id);
 
 	// pass locale and localized page to the "rendering context"

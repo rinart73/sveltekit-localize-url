@@ -3,14 +3,14 @@
 
 	console.info(
 		$LL.log({
-			fileName: 'routes/[[lang=lang]]/[l_about=l_about]/[l_partial=l_partial]/+page.svelte'
+			fileName: 'routes/[[lang=lang]]/[l_about=l_about]/[l_english=l_english]/+page.svelte'
 		})
 	);
 </script>
 
 <h2>
-	{$LL.pagePartial.title()}
+	{$LL.pageEnglish.title()}
 </h2>
 <div class="content">
-	{$LL.pagePartial.text()}
+	{$LL.pageEnglish.text()}
 </div>

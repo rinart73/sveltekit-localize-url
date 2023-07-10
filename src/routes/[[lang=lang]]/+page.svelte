@@ -27,5 +27,14 @@
 </h2>
 
 <div class="content">
-	{$LL.pageHome.spectators(spectators)}
+	<h3>{$LL.pageHome.legend.title()}</h3>
+	<ul class="center-list">
+		<li class="link-hint link-hint--success">{$LL.pageHome.legend.correct()}</li>
+		<li class="link-hint link-hint--fallback">{$LL.pageHome.legend.fallback()}</li>
+		<li class="link-hint link-hint--vary">{$LL.pageHome.legend.vary()}</li>
+		<li class="link-hint link-hint--redirect">{$LL.pageHome.legend.redirect()}</li>
+		<li class="link-hint link-hint--error">{$LL.pageHome.legend.error()}</li>
+	</ul>
+	<h3>{$LL.pageHome.apiDescription()}</h3>
+	<p>{$LL.pageHome.spectators(spectators)}</p>
 </div>

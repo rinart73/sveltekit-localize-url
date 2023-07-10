@@ -11,3 +11,6 @@
 <h2>
 	{$LL.pageAbout.title()}
 </h2>
+<div class="content">
+	{$LL.pageAbout.text()}
+</div>

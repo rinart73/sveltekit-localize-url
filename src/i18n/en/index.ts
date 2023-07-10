@@ -5,26 +5,30 @@ const en = {
 	site: {
 		name: 'Localize URL'
 	},
-	header: {
-		incorrectUrl: 'Incorrect URL',
-		onlyVisibleInEnglish: 'Only visible in English',
-		fallback: 'Fallback URL'
-	},
 	pageHome: {
 		title: 'Home page',
 		welcome: 'Welcome to the home page',
-		spectators: '{0} live spectator{{s}}'
+		apiDescription: 'API calls that are not affected by the library',
+		spectators: '{0} live spectator{{s}}',
+		legend: {
+			title: 'Legend',
+			correct: 'Correct link',
+			fallback: 'Fallback link (leads to another locale)',
+			vary: 'Correct link (only visible for supported locales)',
+			redirect: 'Mismatched link, redirect',
+			error: 'Not available for this locale'
+		}
 	},
 	pageAbout: {
-		title: 'About project'
+		title: 'About',
+		text: 'About us page says hello.'
 	},
-	pagePartial: {
-		title: 'Partially translated page',
+	pageEnglish: {
+		title: 'English-only page',
 		text: 'This page is only available in English.'
 	},
 	pageNews: {
-		title: 'News',
-		posts: 'Posts'
+		title: 'News'
 	},
 	pageError: {
 		title404: 'Page Not Found',

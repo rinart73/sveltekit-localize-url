@@ -27,20 +27,6 @@ type RootTranslation = {
 		 */
 		name: string;
 	};
-	header: {
-		/**
-		 * I​n​c​o​r​r​e​c​t​ ​U​R​L
-		 */
-		incorrectUrl: string;
-		/**
-		 * O​n​l​y​ ​v​i​s​i​b​l​e​ ​i​n​ ​E​n​g​l​i​s​h
-		 */
-		onlyVisibleInEnglish: string;
-		/**
-		 * F​a​l​l​b​a​c​k​ ​U​R​L
-		 */
-		fallback: string;
-	};
 	pageHome: {
 		/**
 		 * H​o​m​e​ ​p​a​g​e
@@ -51,20 +37,54 @@ type RootTranslation = {
 		 */
 		welcome: string;
 		/**
+		 * A​P​I​ ​c​a​l​l​s​ ​t​h​a​t​ ​a​r​e​ ​n​o​t​ ​a​f​f​e​c​t​e​d​ ​b​y​ ​t​h​e​ ​l​i​b​r​a​r​y
+		 */
+		apiDescription: string;
+		/**
 		 * {​0​}​ ​l​i​v​e​ ​s​p​e​c​t​a​t​o​r​{​{​s​}​}
 		 * @param {string | number | boolean} 0
 		 */
 		spectators: RequiredParams<'0'>;
+		legend: {
+			/**
+			 * L​e​g​e​n​d
+			 */
+			title: string;
+			/**
+			 * C​o​r​r​e​c​t​ ​l​i​n​k
+			 */
+			correct: string;
+			/**
+			 * F​a​l​l​b​a​c​k​ ​l​i​n​k​ ​(​l​e​a​d​s​ ​t​o​ ​a​n​o​t​h​e​r​ ​l​o​c​a​l​e​)
+			 */
+			fallback: string;
+			/**
+			 * C​o​r​r​e​c​t​ ​l​i​n​k​ ​(​o​n​l​y​ ​v​i​s​i​b​l​e​ ​f​o​r​ ​s​u​p​p​o​r​t​e​d​ ​l​o​c​a​l​e​s​)
+			 */
+			vary: string;
+			/**
+			 * M​i​s​m​a​t​c​h​e​d​ ​l​i​n​k​,​ ​r​e​d​i​r​e​c​t
+			 */
+			redirect: string;
+			/**
+			 * N​o​t​ ​a​v​a​i​l​a​b​l​e​ ​f​o​r​ ​t​h​i​s​ ​l​o​c​a​l​e
+			 */
+			error: string;
+		};
 	};
 	pageAbout: {
 		/**
-		 * A​b​o​u​t​ ​p​r​o​j​e​c​t
+		 * A​b​o​u​t
 		 */
 		title: string;
-	};
-	pagePartial: {
 		/**
-		 * P​a​r​t​i​a​l​l​y​ ​t​r​a​n​s​l​a​t​e​d​ ​p​a​g​e
+		 * A​b​o​u​t​ ​u​s​ ​p​a​g​e​ ​s​a​y​s​ ​h​e​l​l​o​.
+		 */
+		text: string;
+	};
+	pageEnglish: {
+		/**
+		 * E​n​g​l​i​s​h​-​o​n​l​y​ ​p​a​g​e
 		 */
 		title: string;
 		/**
@@ -77,10 +97,6 @@ type RootTranslation = {
 		 * N​e​w​s
 		 */
 		title: string;
-		/**
-		 * P​o​s​t​s
-		 */
-		posts: string;
 	};
 	pageError: {
 		/**
@@ -133,20 +149,6 @@ export type TranslationFunctions = {
 		 */
 		name: () => LocalizedString;
 	};
-	header: {
-		/**
-		 * Incorrect URL
-		 */
-		incorrectUrl: () => LocalizedString;
-		/**
-		 * Only visible in English
-		 */
-		onlyVisibleInEnglish: () => LocalizedString;
-		/**
-		 * Fallback URL
-		 */
-		fallback: () => LocalizedString;
-	};
 	pageHome: {
 		/**
 		 * Home page
@@ -157,19 +159,53 @@ export type TranslationFunctions = {
 		 */
 		welcome: () => LocalizedString;
 		/**
+		 * API calls that are not affected by the library
+		 */
+		apiDescription: () => LocalizedString;
+		/**
 		 * {0} live spectator{{s}}
 		 */
 		spectators: (arg0: string | number | boolean) => LocalizedString;
+		legend: {
+			/**
+			 * Legend
+			 */
+			title: () => LocalizedString;
+			/**
+			 * Correct link
+			 */
+			correct: () => LocalizedString;
+			/**
+			 * Fallback link (leads to another locale)
+			 */
+			fallback: () => LocalizedString;
+			/**
+			 * Correct link (only visible for supported locales)
+			 */
+			vary: () => LocalizedString;
+			/**
+			 * Mismatched link, redirect
+			 */
+			redirect: () => LocalizedString;
+			/**
+			 * Not available for this locale
+			 */
+			error: () => LocalizedString;
+		};
 	};
 	pageAbout: {
 		/**
-		 * About project
+		 * About
 		 */
 		title: () => LocalizedString;
-	};
-	pagePartial: {
 		/**
-		 * Partially translated page
+		 * About us page says hello.
+		 */
+		text: () => LocalizedString;
+	};
+	pageEnglish: {
+		/**
+		 * English-only page
 		 */
 		title: () => LocalizedString;
 		/**
@@ -182,10 +218,6 @@ export type TranslationFunctions = {
 		 * News
 		 */
 		title: () => LocalizedString;
-		/**
-		 * Posts
-		 */
-		posts: () => LocalizedString;
 	};
 	pageError: {
 		/**

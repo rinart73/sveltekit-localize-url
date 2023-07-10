@@ -12,9 +12,10 @@
 	<h1>{$LL.pageError.title404()}</h1>
 	<p>
 		{#if !$page.error?.message || $page.error?.message === 'Not Found'}
+			<!-- Override default error message -->
 			{$LL.pageError.message404()}
 		{:else}
-			{$page.error?.message}
+			{$page.error.message}
 		{/if}
 	</p>
 {:else if !online}
@@ -24,19 +25,22 @@
 	<h1>{$LL.pageError.titleOther()}</h1>
 	<p>
 		{#if !$page.error?.message || $page.error?.message === 'Internal Error'}
+			<!-- Override default error message -->
 			{$LL.pageError.messageOther()}
 		{:else}
-			{$page.error?.message}
+			{$page.error.message}
 		{/if}
 	</p>
 {/if}
 
 {#if $page.status === 404 || online}
-	<p>
-		{#if $page.error?.link}
+	<!-- Suggest links to exit the page -->
+	{#if $page.error?.link}
+		<p>
 			<a href={$page.error.link}>{$page.error.linkText}</a>
-			/
-		{/if}
+		</p>
+	{/if}
+	<p>
 		<a href={getLocaleHomeHref($locale, $page.url)}>{$LL.pageError.actionHome()}</a>
 	</p>
 {/if}

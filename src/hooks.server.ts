@@ -9,7 +9,7 @@ loadAllLocales();
 const L = i18n();
 
 export const handle: Handle = async ({ event, resolve }) => {
-	// initialize Localize URL library
+	// initialize Localize URL library on server
 	initLocalizeUrl({
 		baseLocale,
 		locales
@@ -19,9 +19,10 @@ export const handle: Handle = async ({ event, resolve }) => {
 	// track the first visit for language detection
 	let hasVisited = true;
 	// only count translateable part of the website (exclude API)
-	const isTranslateablePath = (event.route.id ?? '').startsWith('/[[lang=lang]]');
-	if (!hasVisited && isTranslateablePath) {
+	if ((event.route.id ?? '').startsWith('/[[lang=lang]]')) {
 		hasVisited = event.cookies.get('visited') === '1';
+	}
+	if (!hasVisited) {
 		event.cookies.set('visited', '1', { path: '/' });
 	}
 

@@ -9,22 +9,30 @@ const de = {
 	site: {
 		name: 'Localize URL'
 	},
-	header: {
-		incorrectUrl: 'Falsche URL',
-		onlyVisibleInEnglish: '',
-		fallback: 'Fallback-URL'
-	},
 	pageHome: {
 		title: 'Startseite',
 		welcome: 'Willkommen auf der Homepage',
-		spectators: '{0} Zuschauer live'
+		apiDescription: 'API-Aufrufe, die nicht von der Bibliothek betroffen sind',
+		spectators: '{0} Zuschauer live',
+		legend: {
+			title: 'Legende',
+			correct: 'Richtiger Link',
+			fallback: 'Fallback-Link (führt zu einem anderen Gebietsschema)',
+			vary: 'Richtiger Link (nur für unterstützte Gebietsschemas sichtbar)',
+			redirect: 'Nicht übereinstimmender Link, Weiterleitung',
+			error: 'Für dieses Gebietsschema nicht verfügbar'
+		}
 	},
 	pageAbout: {
-		title: 'Über das Projekt'
+		title: 'Über uns',
+		text: 'Über uns Seite sagt Hallo.'
+	},
+	pageEnglish: {
+		title: 'Seite nur auf Englisch',
+		text: ''
 	},
 	pageNews: {
-		title: 'Nachricht',
-		posts: 'Beiträge'
+		title: 'Nachricht'
 	},
 	pageError: {
 		title404: 'Seite nicht gefunden',

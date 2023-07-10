@@ -9,22 +9,30 @@ const it = {
 	site: {
 		name: 'Localize URL'
 	},
-	header: {
-		incorrectUrl: 'URL errato',
-		onlyVisibleInEnglish: '',
-		fallback: 'URL di riserva'
-	},
 	pageHome: {
 		title: 'Pagina iniziale',
 		welcome: 'Benvenuti nella home page',
-		spectators: '{0} {{spettatore|spettatori}} in diretta'
+		apiDescription: 'Chiamate API che non sono interessate dalla libreria',
+		spectators: '{0} {{spettatore|spettatori}} in diretta',
+		legend: {
+			title: 'Leggenda',
+			correct: 'Collegamento corretto',
+			fallback: "Collegamento di fallback (conduce a un'altra località)",
+			vary: 'Collegamento corretto (visibile solo per le impostazioni locali supportate)',
+			redirect: 'Collegamento non corrispondente, reindirizzamento',
+			error: 'Non disponibile per questa lingua'
+		}
 	},
 	pageAbout: {
-		title: 'A proposito di progetto'
+		title: 'Chi siamo',
+		text: 'La pagina Chi siamo saluta.'
+	},
+	pageEnglish: {
+		title: 'Pagina solo in inglese',
+		text: ''
 	},
 	pageNews: {
-		title: 'Notizia',
-		posts: 'Messaggi'
+		title: 'Notizia'
 	},
 	pageError: {
 		title404: 'Pagina non trovata',

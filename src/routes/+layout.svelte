@@ -20,6 +20,12 @@
 	<slot />
 </main>
 
+<footer>
+	<a href="https://github.com/rinart73/sveltekit-localize-url" target="_blank"
+		><strong>Github:</strong> Localize URL</a
+	>
+</footer>
+
 <svelte:head>
 	<title>{$page.data.title || $LL.site.name()}</title>
 	<HeadHrefLangs />

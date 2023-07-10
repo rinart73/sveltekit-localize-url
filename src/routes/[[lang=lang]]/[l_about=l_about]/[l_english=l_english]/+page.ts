@@ -13,11 +13,11 @@ export const load: PageLoad = async ({ parent }) => {
 	const $LL = get(LL);
 	console.info(
 		$LL.log({
-			fileName: 'routes/[[lang=lang]]/[l_about=l_about]/[l_partial=l_partial]/+page.ts'
+			fileName: 'routes/[[lang=lang]]/[l_about=l_about]/[l_english=l_english]/+page.ts'
 		})
 	);
 
 	return {
-		title: $LL.pagePartial.title()
+		title: $LL.pageEnglish.title()
 	};
 };

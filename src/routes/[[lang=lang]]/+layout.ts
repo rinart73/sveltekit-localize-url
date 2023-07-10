@@ -24,7 +24,16 @@ export const load: LayoutLoad = async ({ parent, url }) => {
 		params: getPageParams(LP)
 	});
 
-	// Validate current page. May throw 404 or redirect.
+	/**
+	 * Localized page validation should happen exactly here in the `routes/[[lang=lang]]/+layout.ts` and NOT in the
+	 * `routes/+layout.ts`. There are 2 reasons for this:
+	 * 1. We shouldn't validate paths like `/api`.
+	 * 2. "If the error occurs inside a load function in `+layout(.server).js`, the closest error boundary in the tree
+	 *      is an `+error.svelte` file above that layout (not next to it)." - https://kit.svelte.dev/docs/errors#responses
+	 *      In other words, when a 404 is thrown here, the `routes/+error.svelte` layout will be used.
+	 *      If we place validation in the `routes/+layout.ts`, there won't be an error layout to use, so SvelteKit will
+	 *      use a default empty white page with a 404 code.
+	 */
 	validatePage(LP, {
 		notFound: {
 			message: $LL.pageError.messageNotTranslated(),

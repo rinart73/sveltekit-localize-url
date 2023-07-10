@@ -9,22 +9,30 @@ const ru = {
 	site: {
 		name: 'Localize URL'
 	},
-	header: {
-		incorrectUrl: 'Неверный URL',
-		onlyVisibleInEnglish: '',
-		fallback: 'Резервный URL'
-	},
 	pageHome: {
 		title: 'Главная страница',
 		welcome: 'Добро пожаловать на главную страницу',
-		spectators: '{0} зрител{{ей|ь|я|я|ей}} онлайн'
+		apiDescription: 'Вызовы API, на которые не влияет библиотека',
+		spectators: '{0} зрител{{ей|ь|я|я|ей}} онлайн',
+		legend: {
+			title: 'Легенда',
+			correct: 'Правильная ссылка',
+			fallback: 'Запасная ссылка (ведет на другой язык)',
+			vary: 'Правильная ссылка (видна только для поддерживаемых языков)',
+			redirect: 'Неправильно составленная ссылка, перенаправление',
+			error: 'Недоступно для этого языка'
+		}
 	},
 	pageAbout: {
-		title: 'О проекте'
+		title: 'О нас',
+		text: 'Страница о нас говорит привет.'
+	},
+	pageEnglish: {
+		title: 'Только английская версия',
+		text: ''
 	},
 	pageNews: {
-		title: 'Новости',
-		posts: 'Посты'
+		title: 'Новости'
 	},
 	pageError: {
 		title404: 'Страница не найдена',
