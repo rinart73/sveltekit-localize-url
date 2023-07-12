@@ -1,7 +1,7 @@
 {
 	"name": "sveltekit-localize-url",
 	"description": "SvelteKit library that handles URL localization and routing.",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"author": "Rinart73",
 	"license": "MIT",
 	"homepage": "https://github.com/rinart73/sveltekit-localize-url",
