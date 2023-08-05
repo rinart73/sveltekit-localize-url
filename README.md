@@ -51,7 +51,7 @@ import { localizeParam, matchParam } from 'sveltekit-localize-url';
 const localizedParam = localizeParam(1, 'l_about', {
 	en: 'about-us',
 	ru: 'o-nas'
-	// there is version in Italian
+	// there is NO version in Italian
 });
 export const match: ParamMatcher = (param) => matchParam(param, localizedParam);
 ```
